@@ -3,8 +3,9 @@ import React, { Component } from "react";
 export class Button extends Component {
 
     render() {
+        const { loadMoreFnc } = this.props;
         return (
-            <p>button</p>
+            <button onClick={loadMoreFnc}>LOAD MORE</button>
         )
     }
 }
