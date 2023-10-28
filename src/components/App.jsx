@@ -9,11 +9,14 @@ import { api } from 'api';
 
 
 
+
 export class App extends Component {
   state = {
     inputValue: '',
     galleryItems: [],
     loader: false,
+    pageNumber: 1,
+    quantity:12 ,
   };
 
 
@@ -23,7 +26,7 @@ export class App extends Component {
 
   SubmitFnc = e => {
     e.preventDefault();
-    let data = api(this.state.inputValue);
+    let data = api(this.state.inputValue,this.state.pageNumber,this.state.quantity);
     try {
       setTimeout(() => {
         data.then(resp => {
@@ -34,14 +37,29 @@ export class App extends Component {
     } catch (error) {
       console.log(error.message);
     } finally {
-      this.setState({ loader: true });
+     this.setState({ loader: true }); 
     }
   }
+  
 
   loadMoreFnc = () => {
-    console.log('hej')
+    this.setState({ pageNumber: this.state.pageNumber += 1, quantity: this.state.quantity += 12 })
+    
+    try {
+      setTimeout(() => {
+        api(this.state.inputValue, this.state.pageNumber, this.state.quantity).then(resp => { this.setState({ galleryItems: resp.data.hits }) });
+        this.setState({ loader: false });
+      },150)
+    } catch (err) {
+      console.log(err)
+    } finally {
+      this.setState({ loader: true });
+    }
+    
+    
 
   }
+
   render() {
     return (
       <div
