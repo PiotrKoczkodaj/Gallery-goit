@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { GalleryItem } from './GalleryItem/GalleryItem';
@@ -14,9 +14,6 @@ export const App = () => {
   const [loader, setLoader] = useState(false)
   const [pageNumber, setPageNumber] = useState(1)
   const [quantity, setQuantity] = useState(12)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [modalSrc, setModalSrc] = useState('')
-  const [modalAlt,setModalAlt] = useState('')
 
  const handleChange = e => {
     setInputValue(e.target.value)
@@ -33,7 +30,7 @@ export const App = () => {
     try {
       setTimeout(() => {
         data.then(resp => {
-          setGalleryItem(resp.data.hits)
+          setGalleryItems(resp.data.hits)
           setLoader(false)
         });
       }, 150);
