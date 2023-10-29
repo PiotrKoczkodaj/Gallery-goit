@@ -47,11 +47,11 @@ export class App extends Component {
 
   loadMoreFnc = () => {
     this.setState({
-      pageNumber: (this.state.pageNumber + 1)
+      pageNumber: this.state.pageNumber + 1
       
     });
      this.setState({
-     quantity: (this.state.quantity + 12),
+     quantity:this.state.quantity + 12
       
     });
 
