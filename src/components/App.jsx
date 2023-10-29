@@ -4,7 +4,6 @@ import { ImageGallery } from './ImageGallery/ImageGallery';
 import { GalleryItem } from './GalleryItem/GalleryItem';
 import { Loader } from './Loader/Loader';
 import { Button } from './Button/Button';
-import { Modal } from './Modal/Modal';
 import { api } from 'api';
 import * as basicLightbox from 'basiclightbox';
 
@@ -48,10 +47,11 @@ export class App extends Component {
 
   loadMoreFnc = () => {
     this.setState({
-      pageNumber: (this.state.pageNumber += 1),
-      quantity: (this.state.quantity += 12),
+      pageNumber: (this.state.pageNumber += 1)
     });
-
+this.setState({
+      pageNumber: (this.state.pageNumber += 1)
+    });
     try {
       setTimeout(() => {
         console.log(this.state);
@@ -105,7 +105,7 @@ export class App extends Component {
         {this.state.galleryItems.length === 0 ? null : (
           <Button loadMoreFnc={this.loadMoreFnc} />
         )}
-        {/* {<Modal />} */}
+        
       </div>
     );
   }
