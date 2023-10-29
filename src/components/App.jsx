@@ -48,10 +48,13 @@ export class App extends Component {
   loadMoreFnc = () => {
     this.setState({
       pageNumber: (this.state.pageNumber += 1)
+      
     });
-this.setState({
-      pageNumber: (this.state.pageNumber += 1)
+     this.setState({
+     quantity: (this.state.quantity += 12),
+      
     });
+
     try {
       setTimeout(() => {
         console.log(this.state);
