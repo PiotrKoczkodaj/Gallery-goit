@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 
-export class Button extends Component {
-
-    render() {
-        const { loadMoreFnc } = this.props;
+export const Button=({ loadMoreFnc })=> {
         return (
             <button onClick={loadMoreFnc}>LOAD MORE</button>
         )
     }
-}

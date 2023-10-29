@@ -1,11 +1,7 @@
-import React, { Component } from 'react';
 
-
-export class Searchbar extends Component {
-    render() {
-      
-    const { changeFnc, handleSubmit } = this.props;
-
+export const Searchbar=({ changeFnc, handleSubmit } )=>{
+    
+  
     return (
       <header className="searchbar">
         <form
@@ -29,4 +25,4 @@ export class Searchbar extends Component {
       </header>
     );
   }
-}
+

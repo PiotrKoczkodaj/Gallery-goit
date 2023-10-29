@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { GalleryItem } from './GalleryItem/GalleryItem';
@@ -7,74 +7,67 @@ import { Button } from './Button/Button';
 import { api } from 'api';
 import * as basicLightbox from 'basiclightbox';
 
-export class App extends Component {
-  state = {
-    inputValue: '',
-    galleryItems: [],
-    loader: false,
-    pageNumber: 1,
-    quantity: 12,
-    isModalOpen: false,
-    modalSrc: '',
-    modalAlt:''
+export const App = () => {
+  
+  const [inputValue, setInputValue] = useState('')
+  const [galleryItems, setGalleryItems] = useState([])
+  const [loader, setLoader] = useState(false)
+  const [pageNumber, setPageNumber] = useState(1)
+  const [quantity, setQuantity] = useState(12)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [modalSrc, setModalSrc] = useState('')
+  const [modalAlt,setModalAlt] = useState('')
+
+ const handleChange = e => {
+    setInputValue(e.target.value)
   };
 
-  handleChange = e => {
-    this.setState({ inputValue: e.target.value });
-  };
-
-  SubmitFnc = e => {
+ const submitFnc = e => {
     e.preventDefault();
-    console.log(this.state)
+    
     let data = api(
-      this.state.inputValue,
-      this.state.pageNumber,
-      this.state.quantity
+      inputValue,
+      pageNumber,
+      quantity
     );
     try {
       setTimeout(() => {
         data.then(resp => {
-          this.setState({ galleryItems: resp.data.hits });
-          this.setState({ loader: false });
+          setGalleryItem(resp.data.hits)
+          setLoader(false)
         });
       }, 150);
     } catch (error) {
       console.log(error.message);
     } finally {
-      this.setState({ loader: true });
+      setLoader(true)
     }
   };
 
-  loadMoreFnc = () => {
-    this.setState({
-      pageNumber: this.state.pageNumber + 1
-      
-    });
-     this.setState({
-     quantity:this.state.quantity + 12
-      
-    });
-
+  const loadMoreFnc = () => {
+   
+    setPageNumber(pageNumber+1)
+   setQuantity(quantity+12)
     try {
       setTimeout(() => {
-        console.log(this.state);
+        
         api(
-          this.state.inputValue,
-          this.state.pageNumber,
-          this.state.quantity
+          inputValue,
+          pageNumber,
+          quantity
         ).then(resp => {
-          this.setState({ galleryItems: resp.data.hits });
+          setGalleryItems(resp.data.hits)
         });
-        this.setState({ loader: false });
+       setLoader(false)
       }, 150);
     } catch (err) {
       console.log(err);
     } finally {
-      this.setState({ loader: true });
+      setLoader(true)
     }
   };
 
-  handleClick = (e) => {
+ const handleClick = (e) => {
 
     const instance = basicLightbox.create(`<div class="overlay">
   <div class="modal">
@@ -86,7 +79,7 @@ export class App extends Component {
     instance.show()
   }
   
-  render() {
+
     return (
       <div
         style={{
@@ -98,18 +91,18 @@ export class App extends Component {
         }}
       >
         <Searchbar
-          changeFnc={this.handleChange}
-          handleSubmit={this.SubmitFnc}
+          changeFnc={handleChange}
+          handleSubmit={submitFnc}
         />
         <ImageGallery>
-          <GalleryItem images={this.state.galleryItems} handleClick={this.handleClick} />
+          <GalleryItem images={galleryItems} handleClick={handleClick} />
         </ImageGallery>
-        {this.state.loader ? <Loader /> : null}
-        {this.state.galleryItems.length === 0 ? null : (
-          <Button loadMoreFnc={this.loadMoreFnc} />
+        {loader ? <Loader /> : null}
+        {galleryItems.length === 0 ? null : (
+          <Button loadMoreFnc={loadMoreFnc} />
         )}
         
       </div>
     );
   }
-}
+

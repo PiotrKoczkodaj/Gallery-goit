@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
 
-export class ImageGallery extends Component {
-  render() {
+
+export const ImageGallery=()=> {
     const style = {
       display: 'flex',
       flexWrap: 'wrap'
@@ -11,4 +10,4 @@ export class ImageGallery extends Component {
       ...style
     }} className="gallery">{children}</ul>;
   }
-}
+

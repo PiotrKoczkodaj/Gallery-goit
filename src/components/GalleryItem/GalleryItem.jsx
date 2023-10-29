@@ -1,11 +1,7 @@
-import React, { Component } from 'react';
+
  
 
-export class GalleryItem extends Component {
-  render() {
-    const { images,handleClick } = this.props;
-    
-    
+export const GalleryItem=({ images,handleClick })=> {
     return (
       <>
         {images.map(image => (
@@ -17,5 +13,4 @@ export class GalleryItem extends Component {
     );
   }
   
-}
 
